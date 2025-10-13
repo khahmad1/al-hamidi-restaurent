@@ -1,0 +1,276 @@
+.adminContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  color: var(--white);
+}
+
+.title {
+  text-align: center;
+  color: var(--gold-crayola);
+  margin-bottom: 40px;
+  font-size: 2.5rem;
+}
+
+.tab,
+.activeTab {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  flex: 1;
+}
+
+.tab {
+  background-color: #666;
+  color: white;
+}
+
+.tab:hover {
+  background-color: #777;
+}
+
+.activeTab {
+  background-color: var(--gold-crayola);
+  color: var(--eerie-black-1);
+}
+
+.formSection {
+  background-color: var(--eerie-black-2);
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 40px;
+}
+
+.formSection h2 {
+  color: var(--gold-crayola);
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  color: var(--gold-crayola);
+  font-weight: bold;
+}
+
+.formGroup input,
+.formGroup select,
+.formGroup textarea {
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  background-color: #161718;
+  color: #999;
+  font-size: 14px;
+}
+
+.formGroup input:focus,
+.formGroup select:focus,
+.formGroup textarea:focus {
+  outline: none;
+  border-color: var(--gold-crayola);
+}
+
+.currentImage {
+  color: var(--gold-crayola);
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.imagePreview {
+  background-color: #1a1a1a;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #333;
+}
+
+.previewImage {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: block;
+  border: 2px solid var(--gold-crayola);
+}
+
+.imageName {
+  color: #999;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.newImageIndicator {
+  color: #4caf50;
+  font-size: 13px;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.submitBtn,
+.cancelBtn,
+.editBtn,
+.deleteBtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submitBtn {
+  background-color: #d89a40;
+  color: white;
+  flex: 1;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background-color: #e69010;
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancelBtn {
+  background-color: #666;
+  color: white;
+}
+
+.cancelBtn:hover {
+  background-color: #777;
+}
+
+.itemsSection {
+  margin-top: 40px;
+}
+
+.itemsSection h2 {
+  color: var(--gold-crayola);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.categorySection {
+  margin-bottom: 40px;
+}
+
+.categoryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--gold-crayola);
+}
+
+.categoryTitle {
+  color: var(--gold-crayola);
+  margin: 0;
+}
+
+.categoryActions {
+  display: flex;
+  gap: 10px;
+}
+
+.itemsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.itemCard {
+  background-color: var(--eerie-black-2);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #333;
+}
+
+.itemInfo h4 {
+  color: var(--gold-crayola);
+  margin-bottom: 10px;
+}
+
+.itemInfo p {
+  color: #999;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.description {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #333;
+}
+
+.itemActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.editBtn {
+  background-color: #4caf50;
+  color: white;
+  flex: 1;
+}
+
+.editBtn:hover {
+  background-color: #45a049;
+}
+
+.deleteBtn {
+  background-color: #f44336;
+  color: white;
+  flex: 1;
+}
+
+.deleteBtn:hover {
+  background-color: #da190b;
+}
+
+@media (max-width: 768px) {
+  .adminContainer {
+    padding: 20px 10px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .formSection {
+    padding: 20px;
+  }
+
+  .itemsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .buttonGroup {
+    flex-direction: column;
+  }
+}
