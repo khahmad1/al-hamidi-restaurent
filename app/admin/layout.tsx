@@ -66,9 +66,7 @@ export default function AdminLayout({
             </button>
           </form>
 
-          <p className="login-hint">
-            <small>Hint: Password is "admin12"</small>
-          </p>
+
         </div>
       </div>
     );
