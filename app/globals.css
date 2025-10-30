@@ -59,6 +59,18 @@
   --transition-1: 250ms ease;
   --transition-2: 500ms ease;
   --transition-3: 1000ms ease;
+
+  /* Z-Index System - Best Practice Hierarchy */
+  --z-behind: -1;
+  --z-normal: 1;
+  --z-dropdown: 100;
+  --z-sticky: 500;
+  --z-header: 800;
+  --z-modal-backdrop: 1000;
+  --z-modal: 1100;
+  --z-tooltip: 2000;
+  --z-cart-backdrop: 9000;
+  --z-cart: 9100;
 }
 
 *,
@@ -197,7 +209,6 @@ body {
   position: relative;
   padding-block: var(--section-space);
   overflow: hidden;
-  z-index: 1;
   margin-bottom: 100px;
   min-height: 100vh;
 }
@@ -720,5 +731,98 @@ body {
     min-width: 80px;
     max-width: 80px;
     height: 80px;
+  }
+}
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: var(--gold-crayola);
+  color: var(--smoky-black-1);
+  border: none;
+  border-radius: 8px;
+  font-size: var(--fontSize-label-1);
+  font-weight: var(--weight-bold);
+  cursor: pointer;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #d89a40;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(232, 190, 118, 0.4);
+}
+
+/* Floating Cart Button */
+.cart-floating-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--gold-crayola);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: var(--z-header);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s;
+  animation: pulse 2s infinite;
+}
+
+.cart-floating-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 25px rgba(232, 190, 118, 0.5);
+}
+
+.cart-floating-btn svg {
+  width: 28px;
+  height: 28px;
+}
+
+.cart-floating-btn svg path {
+  fill: var(--smoky-black-1);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #e74c3c;
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+  border: 2px solid var(--smoky-black-1);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 30px rgba(232, 190, 118, 0.6);
+  }
+  100% {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media (max-width: 768px) {
+  .cart-floating-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 55px;
+    height: 55px;
   }
 }

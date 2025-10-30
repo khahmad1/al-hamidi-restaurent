@@ -2,7 +2,7 @@
   transition: 0.3s;
   background-color: transparent;
   padding-bottom: 10px;
-  z-index: 99999;
+  z-index: var(--z-header);
   margin-top: 0px;
 }
 
@@ -42,7 +42,7 @@
   padding-block: 50px;
   overflow-y: auto;
   visibility: hidden;
-  z-index: 99;
+  z-index: var(--z-header);
   transition: var(--transition-2);
 }
 
@@ -114,7 +114,7 @@
   opacity: 0;
   pointer-events: none;
   transition: var(--transition-2);
-  z-index: 1;
+  z-index: var(--z-sticky);
 }
 
 .overLay.active {
@@ -190,7 +190,7 @@
   height: 40px;
   background-color: var(--black-alpha-80);
   position: absolute;
-  z-index: 99999;
+  z-index: calc(var(--z-header) + 1);
   top: 20px;
   right: 30px;
   border-radius: 50%;
@@ -211,6 +211,7 @@
     transition: 0.3s;
     width: 100%;
     background-color: #161718;
+    z-index: var(--z-header);
   }
 
   .header {
@@ -240,7 +241,7 @@
     padding-inline: 30px;
     padding-block: 0px;
     visibility: visible;
-    z-index: 99;
+    z-index: var(--z-header);
     transition: var(--transition-2);
   }
 

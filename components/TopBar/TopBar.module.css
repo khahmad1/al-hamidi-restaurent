@@ -6,7 +6,7 @@
   width: 100%;
   padding-block: 10px;
   border-block-end: 1px solid var(--white-alpha-20);
-  z-index: 999;
+  z-index: var(--z-header);
   transition: var(--transition-1);
 }
 
