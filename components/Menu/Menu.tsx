@@ -29,6 +29,24 @@ export default function Menu() {
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "info" | "error";
+  } | null>(null);
+  const [toastVisible, setToastVisible] = useState(false);
+
+  const showToast = (
+    message: string,
+    type: "success" | "info" | "error" = "info"
+  ) => {
+    setToast({ message, type });
+    setToastVisible(true);
+    window.clearTimeout((showToast as any)._t);
+    (showToast as any)._t = window.setTimeout(
+      () => setToastVisible(false),
+      2200
+    );
+  };
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -89,13 +107,16 @@ export default function Menu() {
             : cartItem
         )
       );
+      showToast(`تمت زيادة كمية ${item.name} في السلة`, "success");
     } else {
       setCart([...cart, { ...item, quantity: 1 }]);
+      showToast(`تمت إضافة ${item.name} إلى السلة`, "success");
     }
   };
 
   const removeFromCart = (itemName: string) => {
     setCart(cart.filter((item) => item.name !== itemName));
+    showToast(`تمت إزالة ${itemName} من السلة`, "info");
   };
 
   const updateQuantity = (itemName: string, quantity: number) => {
@@ -249,6 +270,41 @@ export default function Menu() {
         onRemoveItem={removeFromCart}
         onClearCart={clearCart}
       />
+
+      {toast && (
+        <div
+          style={{
+            position: "fixed",
+            bottom: 20,
+            left: 20,
+            zIndex: 10000,
+            transition: "transform 0.25s ease, opacity 0.25s ease",
+            transform: toastVisible ? "translateY(0)" : "translateY(10px)",
+            opacity: toastVisible ? 1 : 0,
+          }}
+        >
+          <div
+            role="status"
+            style={{
+              background:
+                toast.type === "error"
+                  ? "#ef4444"
+                  : toast.type === "success"
+                  ? "#10b981"
+                  : "#3b82f6",
+              color: "#fff",
+              padding: "10px 14px",
+              borderRadius: 8,
+              boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
+              direction: "rtl",
+              fontSize: 14,
+              maxWidth: 320,
+            }}
+          >
+            {toast.message}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

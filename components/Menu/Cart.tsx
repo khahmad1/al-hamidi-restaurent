@@ -35,6 +35,8 @@ export default function Cart({
   onClearCart,
 }: CartProps) {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [address, setAddress] = useState("");
+  const [addressFocused, setAddressFocused] = useState(false);
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => {
@@ -48,6 +50,11 @@ export default function Cart({
   };
 
   const handleCheckout = () => {
+    const trimmedAddress = address.trim();
+    if (!trimmedAddress) {
+      // Prevent checkout if address is empty
+      return;
+    }
     const total = calculateTotal();
     const orderDetails = cart
       .map(
@@ -60,7 +67,7 @@ export default function Cart({
       )
       .join("\n");
 
-    const message = `مرحبا، أريد طلب:\n\n${orderDetails}\n\n*المجموع الكلي: ${formatPrice(
+    const message = `مرحبا، أريد طلب:\n\n${orderDetails}\n\nالعنوان: ${trimmedAddress}\n\n*المجموع الكلي: ${formatPrice(
       total
     )}ل.ل*`;
 
@@ -162,7 +169,39 @@ export default function Cart({
                 {formatPrice(calculateTotal())}ل.ل
               </span>
             </div>
-            <button className={styles.checkoutBtn} onClick={handleCheckout}>
+            <div style={{ width: "100%", marginTop: 8 }}>
+              <input
+                type="text"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                placeholder="اكتب العنوان هنا (العنوان مطلوب)"
+                style={{
+                  width: "100%",
+                  padding: "12px 14px",
+                  border: `1px solid ${addressFocused ? "#10b981" : "#e5e7eb"}`,
+                  background: "#f9fafb",
+                  borderRadius: 10,
+                  marginBottom: 10,
+                  direction: "rtl",
+                  outline: "none",
+                  transition: "border-color .2s ease, box-shadow .2s ease",
+                  boxShadow: addressFocused
+                    ? "0 0 0 4px rgba(16,185,129,0.15)"
+                    : "none",
+                }}
+                onFocus={() => setAddressFocused(true)}
+                onBlur={() => setAddressFocused(false)}
+              />
+            </div>
+            <button
+              className={styles.checkoutBtn}
+              onClick={handleCheckout}
+              disabled={!address.trim()}
+              style={{
+                opacity: address.trim() ? 1 : 0.6,
+                cursor: address.trim() ? "pointer" : "not-allowed",
+              }}
+            >
               إرسال الطلب عبر واتساب
             </button>
             <button className={styles.clearBtn} onClick={onClearCart}>
