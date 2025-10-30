@@ -6,7 +6,7 @@
       {
         "name": "بيتزا",
         "type": "قطعة",
-        "price": "50,000",
+        "price": "60,000",
         "size": "صغير",
         "description": "صوص البيتزا , فليفلة , دره , فطر , زيتون , مودزاريلا",
         "productImage": "pizza.jpg"
@@ -22,7 +22,7 @@
       {
         "name": "لحمة بعجين كبير",
         "type": "قطعة",
-        "price": "100,000",
+        "price": "120,000",
         "size": "كبير",
         "description": "عجين رقاقات , لحمة , بصل , دبس رمان , طحينة",
         "productImage": "sfiha-lahmi-large.jpg"
@@ -46,7 +46,7 @@
       {
         "name": "رقاقات جبنة مثلث",
         "type": "قطعة",
-        "price": "50,000",
+        "price": "60,000",
         "size": "صغير",
         "description": "عجين رقاقات , جبنة تشكي و مودزاريل",
         "productImage": "productImage-1701566734148-665522865.jpg"
@@ -54,7 +54,7 @@
       {
         "name": "رقاقات جبنة مربعة",
         "type": "قطعة",
-        "price": "50,000",
+        "price": "60,000",
         "size": "صغير",
         "description": "عجين رقاقات , جبنة تشكي و مودزاريل",
         "productImage": "jbnih-square.jpg"
@@ -62,7 +62,7 @@
       {
         "name": "فاهيتا",
         "type": "قطعة",
-        "price": "50,000",
+        "price": "60,000",
         "size": "صغير",
         "description": "عجين رقاقات , دره , فطر , فليفلة , بصل , دجاج , صوص فاهيتا ",
         "productImage": "productImage-1701566777115-502115158.jpg"
@@ -78,7 +78,7 @@
       {
         "name": "لحمة بعجين صغير",
         "type": "قطعة",
-        "price": "50,000",
+        "price": "60,000",
         "size": "صغير",
         "description": "عجين رقاقات , لحمة , بصل , دبس رمان , طحينة",
         "productImage": "sfiha-lahmi-small.jpg"
@@ -108,7 +108,7 @@
       {
         "name": "بيتزا",
         "type": "قطعة",
-        "price": "50,000",
+        "price": "60,000",
         "size": "صغير",
         "description": "صوص البيتزا , فليفلة , دره , فطر , زيتون , مودزاريلا",
         "productImage": "pizza-3jin.jpg"
@@ -192,7 +192,7 @@
       {
         "name": "كعكة اكسترا جبنة ",
         "type": "قطعة",
-        "price": "200,000",
+        "price": "250,000",
         "size": "وسط",
         "description": "جبنة مودزاريل , جبنة تشيكي",
         "productImage": "kaaki+jbnih.jpg"
@@ -216,7 +216,7 @@
       {
         "name": "كعكة بجبنة ببيروني",
         "type": "قطعة",
-        "price": "230,000",
+        "price": "270,000",
         "size": "صغير",
         "description": "جبنة مودزاريل , جبنة تشيكي , ببيروني",
         "productImage": "kaaki+jbnih.jpg"
@@ -254,7 +254,7 @@
       {
         "name": "Tarte Pineapple",
         "type": "قطعة",
-        "price": "100,000",
+        "price": "150,000",
         "size": "",
         "description": "اناناس, كريم بتسيار",
         "productImage": "pineapple-tart.jpg"
@@ -262,7 +262,7 @@
       {
         "name": "Tarte Nutella",
         "type": "قطعة",
-        "price": "100,000",
+        "price": "150,000",
         "size": "",
         "description": "شوكلا نوتيلا, شوكلا بيضاء",
         "productImage": "nutella.jpg"
@@ -270,7 +270,7 @@
       {
         "name": "Tarte Lotus",
         "type": "قطعة",
-        "price": "100,000",
+        "price": "150,000",
         "size": "",
         "description": "شوكلا لوتس, شوكلا بيضاء, فريز",
         "productImage": "lutos.jpg"
@@ -308,7 +308,7 @@
       {
         "name": "سواريه بيتزا",
         "type": "دزينة",
-        "price": "420,000",
+        "price": "480,000",
         "size": "دزينة",
         "description": "عدد القطع 12",
         "productImage": ""
@@ -316,7 +316,7 @@
       {
         "name": "سواريه فاهيتا",
         "type": "دزينة",
-        "price": "420,000",
+        "price": "480,000",
         "size": "دزينة",
         "description": "عدد القطع 12",
         "productImage": ""
@@ -374,6 +374,14 @@
         "type": "دزينة",
         "price": "420,000",
         "size": "دزينة",
+        "description": "عدد القطع 12",
+        "productImage": ""
+      },
+      {
+        "name": "سواريه لحم بعجين",
+        "type": "قطعة",
+        "price": "480,000",
+        "size": "صغير",
         "description": "عدد القطع 12",
         "productImage": ""
       }
