@@ -1,64 +1,61 @@
 /*
   Al-Hamidi TV Menu Board
-  ─────────────────────────────────────────────
+  ────────────────────────────────────────────────────────
   • html { font-size: 10px } in globals → all sizes in px
-  • Grid dir: ltr → columns stay Left | Center | Right
-  • Text dir: rtl per section for Arabic
-  • Board fills 100dvh; columns distribute sections evenly
+  • White background, dark text, gold headers
+  • height: 100dvh, overflow: hidden — NO SCROLL ever
+  • Grid fills full height; sections stretch evenly in each column
+  ────────────────────────────────────────────────────────
 */
 
-/* ═══════════════════════════════════════════
-   TOKENS
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════════════════ */
 .board {
-  --fs-title:  15px;
-  --fs-item:   13px;
-  --fs-price:  13px;
-  --fs-tag:    10px;
-  --gap-col:   14px;
-  --gap-sec:   10px;
+  /* font sizes — px because html{font-size:10px} */
+  --fs-title:  14px;
+  --fs-item:   12px;
+  --fs-price:  12px;
+  --gap-col:   12px;
   --pad-x:     14px;
-  --pad-y:     10px;
-  --row-py:    3px;
-  --head-py:   5px;
-  --head-px:   12px;
-  --logo-h:    130px;
+  --pad-y:     8px;
+  --head-py:   4px;
+  --head-px:   10px;
+  --logo-h:    120px;
 
-  /* gold palette */
-  --g1: #6a4202;
-  --g2: #c49010;
-  --g3: #f7d045;
-  --g4: #fff9b0;
-  --g5: #f7d045;
-  --g6: #c49010;
-  --g7: #6a4202;
-  --head-fg: #1a0c00;
-  --row-fg:  #f5f5f5;
-  --sep:     rgba(255,255,255,0.09);
+  /* gold bar */
+  --g1: #6a4202;  --g2: #c49010;  --g3: #f7d045;
+  --g4: #fff9b0;  --g5: #f7d045;  --g6: #c49010;  --g7: #6a4202;
+  --head-fg:  #1a0c00;
+
+  /* dark board palette */
+  --bg:       #0f0f0d;
+  --row-fg:   #f5f5f5;
+  --sep:      rgba(255,255,255,0.09);
+  --col-div:  rgba(255,255,255,0.10);
+  --dbl-div:  rgba(255,255,255,0.07);
 }
 
-/* ═══════════════════════════════════════════
-   BOARD SHELL — fills the full screen
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   BOARD SHELL
+═══════════════════════════════════════════════════════ */
 .board {
   position: relative;
   isolation: isolate;
 
-  /* Fill exactly the viewport — no scroll on TV */
+  /* Exactly the viewport — never scroll */
+  width: 100%;
   height: 100vh;
   height: 100dvh;
-  width: 100%;
   overflow: hidden;
 
+  background-color: var(--bg);
+  color: var(--row-fg);
   box-sizing: border-box;
   padding: var(--pad-y) var(--pad-x);
-  color: var(--row-fg);
-
-  /* ── Deep chalkboard base ── */
-  background-color: #0f0f0d;
 }
 
-/* ── Chalkboard grain + radial depth ── */
+/* ── Chalkboard grain + depth ── */
 .board::before {
   content: "";
   position: absolute;
@@ -66,90 +63,93 @@
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 55% at 0%   0%,   rgba(45,40,30,0.70) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 100% 100%,  rgba(15,12,8,0.65)  0%, transparent 55%),
-    radial-gradient(ellipse 80% 30% at 50%  50%,   rgba(20,18,12,0.30) 0%, transparent 65%);
+    radial-gradient(ellipse 65% 50% at 0%   0%,   rgba(40,35,28,0.70) 0%, transparent 58%),
+    radial-gradient(ellipse 55% 45% at 100% 100%, rgba(10,8,5,0.65)   0%, transparent 55%);
 }
 
-/* ── Fine chalk grain (noise SVG) ── */
+/* ── Fine chalk noise ── */
 .board::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.45;
+  opacity: 0.4;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.13'/%3E%3C/svg%3E");
   background-size: 200px 200px;
 }
 
-/* ── Food chalk doodles (watermarks) ── */
-.board .deco {
+/* Food doodle watermarks — faint white chalk strokes */
+.deco {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  /* SVG: wheat stalks, rolling pin, pizza, coffee, leaf sprigs
-     — all low-opacity white lines, like chalk drawings on a board */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round'%3E%3C!-- Top-left wheat stalk --%3E%3Cg stroke-width='1.2' stroke-opacity='0.10'%3E%3Cpath d='M40 20 Q55 60 45 120'/%3E%3Cellipse cx='38' cy='35' rx='8' ry='4' transform='rotate(-30 38 35)'/%3E%3Cellipse cx='52' cy='50' rx='8' ry='4' transform='rotate(20 52 50)'/%3E%3Cellipse cx='44' cy='65' rx='8' ry='4' transform='rotate(-20 44 65)'/%3E%3Cellipse cx='54' cy='80' rx='8' ry='4' transform='rotate(15 54 80)'/%3E%3Cellipse cx='43' cy='95' rx='8' ry='4' transform='rotate(-15 43 95)'/%3E%3C/g%3E%3C!-- Bottom-left wheat stalk --%3E%3Cg stroke-width='1.2' stroke-opacity='0.09'%3E%3Cpath d='M30 680 Q60 640 55 570'/%3E%3Cellipse cx='28' cy='665' rx='8' ry='4' transform='rotate(20 28 665)'/%3E%3Cellipse cx='50' cy='650' rx='8' ry='4' transform='rotate(-15 50 650)'/%3E%3Cellipse cx='38' cy='635' rx='8' ry='4' transform='rotate(25 38 635)'/%3E%3Cellipse cx='55' cy='618' rx='8' ry='4' transform='rotate(-20 55 618)'/%3E%3C/g%3E%3C!-- Top-right wheat stalk --%3E%3Cg stroke-width='1.2' stroke-opacity='0.09'%3E%3Cpath d='M1165 15 Q1148 55 1158 115'/%3E%3Cellipse cx='1168' cy='30' rx='8' ry='4' transform='rotate(30 1168 30)'/%3E%3Cellipse cx='1152' cy='48' rx='8' ry='4' transform='rotate(-20 1152 48)'/%3E%3Cellipse cx='1162' cy='65' rx='8' ry='4' transform='rotate(20 1162 65)'/%3E%3Cellipse cx='1150' cy='82' rx='8' ry='4' transform='rotate(-15 1150 82)'/%3E%3C/g%3E%3C!-- Bottom-right wheat stalk --%3E%3Cg stroke-width='1.2' stroke-opacity='0.08'%3E%3Cpath d='M1170 685 Q1140 645 1148 575'/%3E%3Cellipse cx='1172' cy='670' rx='8' ry='4' transform='rotate(-20 1172 670)'/%3E%3Cellipse cx='1148' cy='655' rx='8' ry='4' transform='rotate(18 1148 655)'/%3E%3Cellipse cx='1160' cy='638' rx='8' ry='4' transform='rotate(-22 1160 638)'/%3E%3C/g%3E%3C!-- Center rolling pin (faint) --%3E%3Cg stroke-width='1' stroke-opacity='0.045'%3E%3Crect x='480' y='290' width='240' height='30' rx='15'/%3E%3Cellipse cx='480' cy='305' rx='18' ry='20'/%3E%3Cellipse cx='720' cy='305' rx='18' ry='20'/%3E%3Cline x1='498' y1='305' x2='702' y2='305'/%3E%3C/g%3E%3C!-- Pizza slice top-center (faint) --%3E%3Cg stroke-width='0.9' stroke-opacity='0.04'%3E%3Cpath d='M560 30 L600 100 L520 100 Z'/%3E%3Cpath d='M540 70 Q542 65 546 70'/%3E%3Cpath d='M565 55 Q567 50 571 55'/%3E%3Cpath d='M580 75 Q582 70 586 75'/%3E%3C/g%3E%3C!-- Coffee cup bottom-center --%3E%3Cg stroke-width='0.9' stroke-opacity='0.04'%3E%3Cpath d='M560 620 L580 620 L575 660 L565 660 Z'/%3E%3Cpath d='M555 620 L585 620'/%3E%3Cpath d='M580 630 Q595 630 595 643 Q595 655 580 655'/%3E%3Cpath d='M565 610 Q567 600 572 605 Q575 595 580 605'/%3E%3C/g%3E%3C!-- Leaf sprig left-mid --%3E%3Cg stroke-width='0.9' stroke-opacity='0.06'%3E%3Cpath d='M80 340 Q100 310 120 340 Q100 370 80 340'/%3E%3Cpath d='M100 310 L100 380'/%3E%3Cpath d='M90 325 Q100 315 110 325'/%3E%3Cpath d='M88 345 Q100 333 112 345'/%3E%3Cpath d='M90 362 Q100 353 110 362'/%3E%3C/g%3E%3C!-- Leaf sprig right-mid --%3E%3Cg stroke-width='0.9' stroke-opacity='0.05'%3E%3Cpath d='M1120 340 Q1100 310 1080 340 Q1100 370 1120 340'/%3E%3Cpath d='M1100 310 L1100 380'/%3E%3Cpath d='M1110 325 Q1100 315 1090 325'/%3E%3Cpath d='M1112 345 Q1100 333 1088 345'/%3E%3Cpath d='M1110 362 Q1100 353 1090 362'/%3E%3C/g%3E%3C!-- Olive branch bottom-left --%3E%3Cg stroke-width='0.9' stroke-opacity='0.05'%3E%3Cpath d='M130 600 Q160 570 190 600'/%3E%3Cellipse cx='140' cy='585' rx='6' ry='3' transform='rotate(-30 140 585)'/%3E%3Cellipse cx='160' cy='575' rx='6' ry='3'/%3E%3Cellipse cx='180' cy='585' rx='6' ry='3' transform='rotate(30 180 585)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg stroke-width='1.4' stroke-opacity='0.06'%3E%3Cpath d='M35 18 Q52 58 42 118'/%3E%3Cellipse cx='33' cy='33' rx='9' ry='4' transform='rotate(-30 33 33)'/%3E%3Cellipse cx='50' cy='50' rx='9' ry='4' transform='rotate(22 50 50)'/%3E%3Cellipse cx='40' cy='67' rx='9' ry='4' transform='rotate(-20 40 67)'/%3E%3Cellipse cx='52' cy='85' rx='9' ry='4' transform='rotate(16 52 85)'/%3E%3Cellipse cx='40' cy='103' rx='9' ry='4' transform='rotate(-14 40 103)'/%3E%3C/g%3E%3Cg stroke-width='1.4' stroke-opacity='0.055'%3E%3Cpath d='M1168 14 Q1150 55 1160 118'/%3E%3Cellipse cx='1171' cy='30' rx='9' ry='4' transform='rotate(30 1171 30)'/%3E%3Cellipse cx='1153' cy='50' rx='9' ry='4' transform='rotate(-22 1153 50)'/%3E%3Cellipse cx='1163' cy='68' rx='9' ry='4' transform='rotate(20 1163 68)'/%3E%3Cellipse cx='1151' cy='86' rx='9' ry='4' transform='rotate(-16 1151 86)'/%3E%3C/g%3E%3Cg stroke-width='1.2' stroke-opacity='0.05'%3E%3Cpath d='M25 680 Q58 640 52 570'/%3E%3Cellipse cx='23' cy='666' rx='8' ry='4' transform='rotate(22 23 666)'/%3E%3Cellipse cx='47' cy='650' rx='8' ry='4' transform='rotate(-16 47 650)'/%3E%3Cellipse cx='35' cy='634' rx='8' ry='4' transform='rotate(24 35 634)'/%3E%3Cellipse cx='52' cy='616' rx='8' ry='4' transform='rotate(-19 52 616)'/%3E%3C/g%3E%3Cg stroke-width='1.2' stroke-opacity='0.045'%3E%3Cpath d='M1172 682 Q1143 643 1150 575'/%3E%3Cellipse cx='1174' cy='668' rx='8' ry='4' transform='rotate(-21 1174 668)'/%3E%3Cellipse cx='1150' cy='652' rx='8' ry='4' transform='rotate(18 1150 652)'/%3E%3Cellipse cx='1162' cy='636' rx='8' ry='4' transform='rotate(-22 1162 636)'/%3E%3C/g%3E%3Cg stroke-width='1' stroke-opacity='0.03'%3E%3Crect x='482' y='292' width='236' height='28' rx='14'/%3E%3Cellipse cx='482' cy='306' rx='17' ry='19'/%3E%3Cellipse cx='718' cy='306' rx='17' ry='19'/%3E%3Cline x1='499' y1='306' x2='701' y2='306'/%3E%3C/g%3E%3Cg stroke-width='0.9' stroke-opacity='0.028'%3E%3Cpath d='M558 32 L600 102 L516 102 Z'/%3E%3Cpath d='M538 72 Q541 66 545 72'/%3E%3Cpath d='M564 56 Q567 50 571 56'/%3E%3Cpath d='M578 76 Q581 70 585 76'/%3E%3C/g%3E%3Cg stroke-width='1' stroke-opacity='0.045'%3E%3Cpath d='M78 338 Q100 308 122 338 Q100 368 78 338'/%3E%3Cpath d='M100 308 L100 378'/%3E%3Cpath d='M88 324 Q100 314 112 324'/%3E%3Cpath d='M86 344 Q100 332 114 344'/%3E%3Cpath d='M88 362 Q100 353 112 362'/%3E%3C/g%3E%3Cg stroke-width='1' stroke-opacity='0.038'%3E%3Cpath d='M1122 338 Q1100 308 1078 338 Q1100 368 1122 338'/%3E%3Cpath d='M1100 308 L1100 378'/%3E%3Cpath d='M1112 324 Q1100 314 1088 324'/%3E%3Cpath d='M1114 344 Q1100 332 1086 344'/%3E%3Cpath d='M1112 362 Q1100 353 1088 362'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   background-size: 100% 100%;
   background-position: center;
 }
 
-/* ── Edge vignette (dark border glow) ── */
-.board .vignette {
+/* Edge vignette */
+.vignette {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  box-shadow:
-    inset 0   0  80px rgba(0,0,0,0.6),
-    inset 0   0  30px rgba(0,0,0,0.4);
+  box-shadow: inset 0 0 80px rgba(0,0,0,0.55);
 }
 
-/* ═══════════════════════════════════════════
-   INNER GRID — height: 100%
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   INNER GRID — fills board height perfectly
+═══════════════════════════════════════════════════════ */
 .inner {
   position: relative;
   z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1.3fr 1fr;
-  gap: var(--gap-col);
+  grid-template-rows: 1fr;           /* single row that fills height */
+  align-items: stretch;              /* columns stretch to full height */
+  column-gap: var(--gap-col);
   direction: ltr;
-
-  /* Fill available height after board padding */
-  height: calc(100% - 0px);
+  height: 100%;                      /* fill board after padding */
   max-width: 1920px;
   margin: 0 auto;
 }
 
-/* ═══════════════════════════════════════════
-   COLUMNS — distribute sections vertically
-═══════════════════════════════════════════ */
+/* Thin vertical dividers between columns */
+.colLeft  { border-inline-end: 1px solid var(--col-div); padding-inline-end: var(--gap-col); }
+.colCenter{ border-inline-end: 1px solid var(--col-div); padding-inline-end: var(--gap-col); }
+
+/* ═══════════════════════════════════════════════════════
+   COLUMNS — sections fill height evenly
+═══════════════════════════════════════════════════════ */
 .colLeft,
 .colCenter,
 .colRight {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* spread sections to fill height */
-  gap: var(--gap-sec);
+  /* space-between: pushes sections to use the full column height */
+  justify-content: space-between;
+  gap: 6px;
   min-width: 0;
   height: 100%;
+  overflow: hidden;                  /* hard clip — never overflow */
 }
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════
    SECTION BLOCKS
-═══════════════════════════════════════════ */
+═══════════════════════════════════════════════════════ */
 .section {
   display: flex;
   flex-direction: column;
-  gap: 0;
   direction: rtl;
-  flex: 1; /* all sections grow equally within the column */
+  /* Each section claims an equal share of column height */
+  flex: 1;
+  min-height: 0;                     /* allow shrink below content size */
+  overflow: hidden;
 }
 
-/* ── Gold gradient header bar ── */
+/* ── Gold header bar ── */
 .sectionTitle {
   margin: 0 0 2px;
   padding: var(--head-py) var(--head-px);
@@ -159,26 +159,20 @@
   text-align: center;
   color: var(--head-fg);
   border-radius: 3px;
-  letter-spacing: 0.03em;
   flex-shrink: 0;
+  letter-spacing: 0.03em;
 
   background:
-    linear-gradient(180deg, rgba(255,255,255,0.22) 0%, transparent 45%),
+    linear-gradient(180deg, rgba(255,255,255,0.25) 0%, transparent 45%),
     linear-gradient(
       90deg,
-      var(--g1) 0%,
-      var(--g2) 12%,
-      var(--g3) 32%,
-      var(--g4) 50%,
-      var(--g5) 68%,
-      var(--g6) 88%,
-      var(--g7) 100%
+      var(--g1) 0%, var(--g2) 12%, var(--g3) 32%,
+      var(--g4) 50%, var(--g5) 68%, var(--g6) 88%, var(--g7) 100%
     );
-
   box-shadow:
-    0 1px 0 rgba(0,0,0,0.35),
-    0 3px 10px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.4);
+    0 1px 0 rgba(0,0,0,0.25),
+    0 3px 8px rgba(0,0,0,0.20),
+    inset 0 1px 0 rgba(255,255,255,0.5);
   text-shadow: 0 1px 0 rgba(255,255,255,0.4);
 }
 
@@ -188,14 +182,16 @@
   letter-spacing: 0.06em;
 }
 
-/* ═══════════════════════════════════════════
-   ITEM ROWS
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   ITEM ROWS — single-column sections
+═══════════════════════════════════════════════════════ */
 .itemList {
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: space-evenly; /* rows spread inside the section */
+  min-height: 0;
+  /* Spread rows to consume section height */
+  justify-content: space-evenly;
 }
 
 .itemRow {
@@ -203,12 +199,13 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
-  gap: 6px;
-  padding: var(--row-py) 4px;
+  gap: 4px;
+  padding: 1px 3px;
   border-bottom: 1px solid var(--sep);
   font-size: var(--fs-item);
-  line-height: 1.4;
+  line-height: 1.35;
   direction: rtl;
+  flex-shrink: 0;
 }
 
 .itemRow:last-child { border-bottom: none; }
@@ -217,7 +214,9 @@
   flex: 1;
   text-align: right;
   min-width: 0;
-  word-break: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .nameEn {
@@ -230,123 +229,131 @@
   flex-shrink: 0;
   font-size: var(--fs-price);
   font-weight: 600;
-  color: #fff;
-  min-width: 48px;
+  color: #ffffff;
+  min-width: 44px;
   text-align: left;
-  letter-spacing: 0.01em;
   font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
 }
 
-/* LTR overrides for English sections */
+/* LTR overrides */
 .ltr          { direction: ltr; }
 .ltr .name    { text-align: left; }
 .ltr .price   { text-align: right; }
 
-/* ═══════════════════════════════════════════
-   DOUBLE-COLUMN SECTIONS (center column)
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   DOUBLE-COLUMN SECTIONS
+═══════════════════════════════════════════════════════ */
 .doubleGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2px 8px;
+  column-gap: 8px;
   direction: rtl;
   flex: 1;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .doubleCol {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .doubleCol .itemRow:not(:last-child) { border-bottom: 1px solid var(--sep); }
 .doubleCol .itemRow:last-child        { border-bottom: none; }
 
 .doubleCol:first-child {
-  border-inline-end: 1px solid rgba(255,255,255,0.07);
-  padding-inline-end: 6px;
+  border-inline-end: 1px solid var(--dbl-div);
+  padding-inline-end: 5px;
 }
 .doubleCol:last-child {
   padding-inline-start: 4px;
 }
 
-/* ═══════════════════════════════════════════
-   LOGO (real brand image)
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   LOGO
+═══════════════════════════════════════════════════════ */
 .logoBlock {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   flex-shrink: 0;
+  padding-bottom: 4px;
 }
 
-/* Fixed-height container so next/image fill works */
 .logoImgWrap {
   position: relative;
   width: 100%;
   height: var(--logo-h);
 }
 
-/* ═══════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+═══════════════════════════════════════════════════════ */
 
-/* ─── Large TV / 4K ─── */
-@media (min-width: 1600px) {
+/* ─── 4K / very large TV ≥ 1920px ─── */
+@media (min-width: 1920px) {
   .board {
-    --fs-title: 19px;
+    --fs-title: 20px;
     --fs-item:  17px;
     --fs-price: 17px;
     --gap-col:  22px;
-    --gap-sec:  16px;
-    --pad-x:    26px;
-    --pad-y:    18px;
+    --pad-x:    30px;
+    --pad-y:    20px;
     --head-py:  8px;
     --head-px:  18px;
-    --row-py:   4px;
-    --logo-h:   170px;
+    --logo-h:   180px;
   }
-  .price { min-width: 62px; }
+  .price { min-width: 68px; }
 }
 
-@media (min-width: 1920px) {
+/* ─── Large TV ≥ 1600px ─── */
+@media (min-width: 1600px) and (max-width: 1919px) {
   .board {
-    --fs-title: 22px;
-    --fs-item:  19px;
-    --fs-price: 19px;
-    --gap-col:  28px;
-    --gap-sec:  20px;
-    --pad-x:    34px;
-    --pad-y:    24px;
-    --head-py:  10px;
-    --logo-h:   200px;
+    --fs-title: 17px;
+    --fs-item:  15px;
+    --fs-price: 15px;
+    --gap-col:  16px;
+    --pad-x:    22px;
+    --pad-y:    14px;
+    --head-py:  6px;
+    --head-px:  14px;
+    --logo-h:   150px;
   }
-  .price { min-width: 74px; }
+  .price { min-width: 58px; }
 }
 
-/* ─── Compact desktop ─── */
-@media (max-width: 1280px) {
+/* ─── Standard 1080p (default above) ─── */
+
+/* ─── Compact 1366/1280 laptop/smaller TV ─── */
+@media (max-width: 1366px) {
   .board {
     --fs-title: 13px;
-    --fs-item:  12px;
-    --fs-price: 12px;
-    --gap-col:  10px;
-    --gap-sec:  8px;
+    --fs-item:  11px;
+    --fs-price: 11px;
+    --gap-col:  9px;
     --pad-x:    10px;
-    --head-py:  4px;
-    --head-px:  9px;
-    --row-py:   2px;
-    --logo-h:   110px;
+    --pad-y:    6px;
+    --head-py:  3px;
+    --head-px:  8px;
+    --logo-h:   105px;
   }
-  .price { min-width: 42px; }
+  .price { min-width: 40px; }
 }
 
-/* ─── Tablet landscape: 2 columns, right spans bottom ─── */
+/* ─── Tablet landscape ≤ 1024px: allow scroll ─── */
 @media (max-width: 1024px) {
   .board {
     height: auto;
     min-height: 100dvh;
     overflow: auto;
+    --fs-title: 14px;
+    --fs-item:  13px;
+    --fs-price: 13px;
+    --logo-h:   130px;
   }
 
   .inner {
@@ -355,10 +362,11 @@
     grid-template-areas:
       "left  center"
       "right right";
+    align-items: start;
   }
 
-  .colLeft   { grid-area: left;   height: auto; justify-content: flex-start; }
-  .colCenter { grid-area: center; height: auto; justify-content: flex-start; }
+  .colLeft   { grid-area: left;   height: auto; justify-content: flex-start; overflow: visible; }
+  .colCenter { grid-area: center; height: auto; justify-content: flex-start; overflow: visible; }
   .colRight  {
     grid-area: right;
     height: auto;
@@ -366,75 +374,57 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
+    overflow: visible;
   }
+  .colLeft  { border-inline-end: 1px solid var(--col-div); }
+  .colCenter{ border-inline-end: none; }
 
-  .logoBlock  { width: 100%; justify-content: center; }
-  .colRight .section { flex: 1 1 200px; }
-  .section { flex: none; }
+  .logoBlock { width: 100%; }
+  .colRight .section { flex: 1 1 200px; overflow: visible; }
+  .section { flex: none; overflow: visible; }
   .itemList { justify-content: flex-start; }
   .doubleCol { justify-content: flex-start; }
 }
 
-/* ─── Tablet portrait ─── */
+/* ─── Mobile portrait ≤ 768px ─── */
 @media (max-width: 768px) {
   .inner {
     grid-template-columns: 1fr;
     grid-template-areas: none;
+    align-items: start;
   }
-
-  .colLeft,
-  .colCenter,
-  .colRight {
+  .colLeft, .colCenter, .colRight {
     grid-area: auto;
     flex-direction: column;
     justify-content: flex-start;
     height: auto;
+    overflow: visible;
+    border: none;
+    padding: 0;
   }
-
   .board {
     --fs-title: 14px;
     --fs-item:  13px;
     --fs-price: 13px;
-    --logo-h:   140px;
+    --logo-h:   130px;
   }
-
   .doubleGrid { grid-template-columns: 1fr 1fr; }
   .doubleCol:first-child {
-    border-inline-end: 1px solid rgba(255,255,255,0.07);
-    padding-inline-end: 6px;
+    border-inline-end: 1px solid var(--dbl-div);
+    padding-inline-end: 5px;
   }
-  .doubleCol:last-child {
-    padding-inline-start: 4px;
-  }
+  .doubleCol:last-child { padding-inline-start: 4px; }
 }
 
-/* ─── Small mobile ─── */
+/* ─── Small mobile ≤ 480px ─── */
 @media (max-width: 480px) {
-  .board {
-    --fs-title: 13px;
-    --fs-item:  12px;
-    --fs-price: 12px;
-    --pad-x:    8px;
-    --logo-h:   110px;
-  }
-
+  .board { --pad-x: 8px; --logo-h: 100px; }
   .doubleGrid { grid-template-columns: 1fr; }
-  .doubleCol:first-child {
-    border-inline-end: none;
-    padding-inline-end: 0;
-  }
-  .doubleCol:last-child {
-    border-top: 1px solid var(--sep);
-    padding-top: 4px;
-    padding-inline-start: 0;
-  }
+  .doubleCol:first-child { border-inline-end: none; padding-inline-end: 0; }
+  .doubleCol:last-child  { border-top: 1px solid var(--sep); padding: 4px 0 0; }
 }
 
 /* Print */
 @media print {
-  .board {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    height: auto;
-  }
+  .board { -webkit-print-color-adjust: exact; print-color-adjust: exact; height: auto; }
 }
