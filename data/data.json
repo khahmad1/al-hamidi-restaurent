@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "brandName": "Al-Hamidi",
+    "tagline": "SINCE 1999"
+  },
+  "left": [
+    {
+      "sectionTitle": "منقوشة مشروحة",
+      "layout": "single",
+      "titleLang": "ar",
+      "items": [
+        { "name": "زعتر مشروحة", "price": "١٤٠.٠٠٠" },
+        { "name": "زعتر مع جبنة مشروحة", "price": "٢٢٠.٠٠٠" },
+        { "name": "لحمة مشروحة", "price": "٣٥٠.٠٠٠" },
+        { "name": "تركية مشروحة", "price": "٣٢٠.٠٠٠" },
+        { "name": "جبنة مشروحة", "price": "٣٢٠.٠٠٠" }
+      ]
+    },
+    {
+      "sectionTitle": "Tarte",
+      "layout": "single",
+      "titleLang": "en",
+      "items": [
+        { "name": "Tarte Nutella", "price": "١٥٠.٠٠٠" },
+        { "name": "Tarte Lotus", "price": "١٥٠.٠٠٠" },
+        { "name": "Tarte Pineapple", "price": "١٥٠.٠٠٠" },
+        { "name": "Tarte بجبنة و حبش", "price": "١٠٠.٠٠٠" },
+        { "name": "Tarte بجبنة و سجق", "price": "١٠٠.٠٠٠" }
+      ]
+    },
+    {
+      "sectionTitle": "مرطبات",
+      "layout": "single",
+      "titleLang": "ar",
+      "items": [
+        { "name": "مياه", "price": "٢٥.٠٠٠" },
+        { "name": "Kinza cola", "price": "٥٠.٠٠٠" },
+        { "name": "عصير", "price": "٤٥.٠٠٠" },
+        { "name": "شاي", "price": "٣٥.٠٠٠" },
+        { "name": "قهوة", "price": "٤٠.٠٠٠" },
+        { "name": "عصير برتقال", "price": "٥٥.٠٠٠" }
+      ]
+    }
+  ],
+  "center": [
+    {
+      "sectionTitle": "منقوش اكسترا",
+      "layout": "double",
+      "titleLang": "ar",
+      "items": [
+        { "name": "جبنة اكسترا", "price": "٢٧٠.٠٠٠" },
+        { "name": "جبنة ودرة", "price": "٢٧٠.٠٠٠" },
+        { "name": "جبنة وخضرة", "price": "٢٧٠.٠٠٠" },
+        { "name": "جبنة وسجق", "price": "٣٢٠.٠٠٠" },
+        { "name": "جبنة وبيبروني", "price": "٣٢٠.٠٠٠" },
+        { "name": "جبنة وحبش", "price": "٣٢٠.٠٠٠" },
+        { "name": "أريشة مع جبنة", "price": "٢٥٠.٠٠٠" },
+        { "name": "لحمة مع جبنة", "price": "٣٠٠.٠٠٠" }
+      ]
+    },
+    {
+      "sectionTitle": "سواريه",
+      "layout": "double",
+      "titleLang": "ar",
+      "items": [
+        { "name": "بيتزا", "price": "٦٠.٠٠٠" },
+        { "name": "فاهيتا", "price": "٧٠.٠٠٠" },
+        { "name": "لحمة بعجين كبير", "price": "١٤٠.٠٠٠" },
+        { "name": "سمبوسك لحمة", "price": "٤٠.٠٠٠" },
+        { "name": "كبه بلحمة مقلية", "price": "٥٠.٠٠٠" },
+        { "name": "زعتر", "price": "٣٠.٠٠٠" },
+        { "name": "لحمة بعجين صغير", "price": "٧٠.٠٠٠" },
+        { "name": "رقاقات جبنة مثلث", "price": "٧٠.٠٠٠" },
+        { "name": "رقاقات جبنة مربعة", "price": "٦٠.٠٠٠" },
+        { "name": "شعيبيات سلق", "price": "٦٠.٠٠٠" },
+        { "name": "أريشة مع جبنة", "price": "٥٠.٠٠٠" },
+        { "name": "تركية مع جبنة", "price": "٦٠.٠٠٠" }
+      ]
+    },
+    {
+      "sectionTitle": "كعك",
+      "layout": "double",
+      "titleLang": "ar",
+      "items": [
+        { "name": "كعكة جبنة", "price": "٢٤٠.٠٠٠" },
+        { "name": "كعكة اكسترا جبنة", "price": "٣٠٠.٠٠٠" },
+        { "name": "كعكة بجبنة مع ذره", "price": "٣٠٠.٠٠٠" },
+        { "name": "كعكة جبنة بخضرا", "price": "٣٠٠.٠٠٠" },
+        { "name": "كعكة بجبنة ببيروني", "price": "٣٢٠.٠٠٠" },
+        { "name": "كعكة بجبنة حبش", "price": "٣٢٠.٠٠٠" },
+        { "name": "sitos كعكة بجبنة", "price": "٣٠٠.٠٠٠" },
+        { "name": "كعكة جبنة وسجق", "price": "٣٢٠.٠٠٠" }
+      ]
+    }
+  ],
+  "right": {
+    "sections": [
+      {
+        "sectionTitle": "منقوش",
+        "layout": "single",
+        "titleLang": "ar",
+        "items": [
+          { "name": "زعتر", "price": "٩٠.٠٠٠" },
+          { "name": "جبنة", "price": "٢٢٠.٠٠٠" },
+          { "name": "أريشة", "price": "١٩٠.٠٠٠" },
+          { "name": "تركية", "price": "٢٢٠.٠٠٠" },
+          { "name": "زعتر خضرة", "price": "١١٠.٠٠٠" },
+          { "name": "نص زعتر نص جبنة", "price": "١٦٠.٠٠٠" },
+          { "name": "موزريلا", "price": "٢٥٠.٠٠٠" },
+          { "name": "لحمة", "price": "٢٥٠.٠٠٠" }
+        ]
+      },
+      {
+        "sectionTitle": "منقوش أسمر",
+        "layout": "single",
+        "titleLang": "ar",
+        "items": [
+          { "name": "زعتر اسمر", "price": "٩٠.٠٠٠" },
+          { "name": "جبنة اسمر", "price": "٢٢٠.٠٠٠" },
+          { "name": "تركية اسمر", "price": "٢٢٠.٠٠٠" },
+          { "name": "زعتر خضرة اسمر", "price": "١١٠.٠٠٠" },
+          { "name": "اريشة اسمر", "price": "١٩٠.٠٠٠" },
+          { "name": "لحمة اسمر", "price": "٢٥٠.٠٠٠" },
+          { "name": "اريشة مع جبنة اسمر", "price": "٢٥٠.٠٠٠" },
+          { "name": "نص جبنة نص زعتر اسمر", "price": "١٦٠.٠٠٠" }
+        ]
+      }
+    ]
+  }
+}

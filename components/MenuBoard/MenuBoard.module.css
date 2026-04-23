@@ -1,0 +1,440 @@
+/*
+  Al-Hamidi TV Menu Board
+  ─────────────────────────────────────────────
+  • html { font-size: 10px } in globals → all sizes in px
+  • Grid dir: ltr → columns stay Left | Center | Right
+  • Text dir: rtl per section for Arabic
+  • Board fills 100dvh; columns distribute sections evenly
+*/
+
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+.board {
+  --fs-title:  15px;
+  --fs-item:   13px;
+  --fs-price:  13px;
+  --fs-tag:    10px;
+  --gap-col:   14px;
+  --gap-sec:   10px;
+  --pad-x:     14px;
+  --pad-y:     10px;
+  --row-py:    3px;
+  --head-py:   5px;
+  --head-px:   12px;
+  --logo-h:    130px;
+
+  /* gold palette */
+  --g1: #6a4202;
+  --g2: #c49010;
+  --g3: #f7d045;
+  --g4: #fff9b0;
+  --g5: #f7d045;
+  --g6: #c49010;
+  --g7: #6a4202;
+  --head-fg: #1a0c00;
+  --row-fg:  #f5f5f5;
+  --sep:     rgba(255,255,255,0.09);
+}
+
+/* ═══════════════════════════════════════════
+   BOARD SHELL — fills the full screen
+═══════════════════════════════════════════ */
+.board {
+  position: relative;
+  isolation: isolate;
+
+  /* Fill exactly the viewport — no scroll on TV */
+  height: 100vh;
+  height: 100dvh;
+  width: 100%;
+  overflow: hidden;
+
+  box-sizing: border-box;
+  padding: var(--pad-y) var(--pad-x);
+  color: var(--row-fg);
+
+  /* ── Deep chalkboard base ── */
+  background-color: #0f0f0d;
+}
+
+/* ── Chalkboard grain + radial depth ── */
+.board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 55% at 0%   0%,   rgba(45,40,30,0.70) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 100% 100%,  rgba(15,12,8,0.65)  0%, transparent 55%),
+    radial-gradient(ellipse 80% 30% at 50%  50%,   rgba(20,18,12,0.30) 0%, transparent 65%);
+}
+
+/* ── Fine chalk grain (noise SVG) ── */
+.board::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.13'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── Food chalk doodles (watermarks) ── */
+.board .deco {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* SVG: wheat stalks, rolling pin, pizza, coffee, leaf sprigs
+     — all low-opacity white lines, like chalk drawings on a board */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round'%3E%3C!-- Top-left wheat stalk --%3E%3Cg stroke-width='1.2' stroke-opacity='0.10'%3E%3Cpath d='M40 20 Q55 60 45 120'/%3E%3Cellipse cx='38' cy='35' rx='8' ry='4' transform='rotate(-30 38 35)'/%3E%3Cellipse cx='52' cy='50' rx='8' ry='4' transform='rotate(20 52 50)'/%3E%3Cellipse cx='44' cy='65' rx='8' ry='4' transform='rotate(-20 44 65)'/%3E%3Cellipse cx='54' cy='80' rx='8' ry='4' transform='rotate(15 54 80)'/%3E%3Cellipse cx='43' cy='95' rx='8' ry='4' transform='rotate(-15 43 95)'/%3E%3C/g%3E%3C!-- Bottom-left wheat stalk --%3E%3Cg stroke-width='1.2' stroke-opacity='0.09'%3E%3Cpath d='M30 680 Q60 640 55 570'/%3E%3Cellipse cx='28' cy='665' rx='8' ry='4' transform='rotate(20 28 665)'/%3E%3Cellipse cx='50' cy='650' rx='8' ry='4' transform='rotate(-15 50 650)'/%3E%3Cellipse cx='38' cy='635' rx='8' ry='4' transform='rotate(25 38 635)'/%3E%3Cellipse cx='55' cy='618' rx='8' ry='4' transform='rotate(-20 55 618)'/%3E%3C/g%3E%3C!-- Top-right wheat stalk --%3E%3Cg stroke-width='1.2' stroke-opacity='0.09'%3E%3Cpath d='M1165 15 Q1148 55 1158 115'/%3E%3Cellipse cx='1168' cy='30' rx='8' ry='4' transform='rotate(30 1168 30)'/%3E%3Cellipse cx='1152' cy='48' rx='8' ry='4' transform='rotate(-20 1152 48)'/%3E%3Cellipse cx='1162' cy='65' rx='8' ry='4' transform='rotate(20 1162 65)'/%3E%3Cellipse cx='1150' cy='82' rx='8' ry='4' transform='rotate(-15 1150 82)'/%3E%3C/g%3E%3C!-- Bottom-right wheat stalk --%3E%3Cg stroke-width='1.2' stroke-opacity='0.08'%3E%3Cpath d='M1170 685 Q1140 645 1148 575'/%3E%3Cellipse cx='1172' cy='670' rx='8' ry='4' transform='rotate(-20 1172 670)'/%3E%3Cellipse cx='1148' cy='655' rx='8' ry='4' transform='rotate(18 1148 655)'/%3E%3Cellipse cx='1160' cy='638' rx='8' ry='4' transform='rotate(-22 1160 638)'/%3E%3C/g%3E%3C!-- Center rolling pin (faint) --%3E%3Cg stroke-width='1' stroke-opacity='0.045'%3E%3Crect x='480' y='290' width='240' height='30' rx='15'/%3E%3Cellipse cx='480' cy='305' rx='18' ry='20'/%3E%3Cellipse cx='720' cy='305' rx='18' ry='20'/%3E%3Cline x1='498' y1='305' x2='702' y2='305'/%3E%3C/g%3E%3C!-- Pizza slice top-center (faint) --%3E%3Cg stroke-width='0.9' stroke-opacity='0.04'%3E%3Cpath d='M560 30 L600 100 L520 100 Z'/%3E%3Cpath d='M540 70 Q542 65 546 70'/%3E%3Cpath d='M565 55 Q567 50 571 55'/%3E%3Cpath d='M580 75 Q582 70 586 75'/%3E%3C/g%3E%3C!-- Coffee cup bottom-center --%3E%3Cg stroke-width='0.9' stroke-opacity='0.04'%3E%3Cpath d='M560 620 L580 620 L575 660 L565 660 Z'/%3E%3Cpath d='M555 620 L585 620'/%3E%3Cpath d='M580 630 Q595 630 595 643 Q595 655 580 655'/%3E%3Cpath d='M565 610 Q567 600 572 605 Q575 595 580 605'/%3E%3C/g%3E%3C!-- Leaf sprig left-mid --%3E%3Cg stroke-width='0.9' stroke-opacity='0.06'%3E%3Cpath d='M80 340 Q100 310 120 340 Q100 370 80 340'/%3E%3Cpath d='M100 310 L100 380'/%3E%3Cpath d='M90 325 Q100 315 110 325'/%3E%3Cpath d='M88 345 Q100 333 112 345'/%3E%3Cpath d='M90 362 Q100 353 110 362'/%3E%3C/g%3E%3C!-- Leaf sprig right-mid --%3E%3Cg stroke-width='0.9' stroke-opacity='0.05'%3E%3Cpath d='M1120 340 Q1100 310 1080 340 Q1100 370 1120 340'/%3E%3Cpath d='M1100 310 L1100 380'/%3E%3Cpath d='M1110 325 Q1100 315 1090 325'/%3E%3Cpath d='M1112 345 Q1100 333 1088 345'/%3E%3Cpath d='M1110 362 Q1100 353 1090 362'/%3E%3C/g%3E%3C!-- Olive branch bottom-left --%3E%3Cg stroke-width='0.9' stroke-opacity='0.05'%3E%3Cpath d='M130 600 Q160 570 190 600'/%3E%3Cellipse cx='140' cy='585' rx='6' ry='3' transform='rotate(-30 140 585)'/%3E%3Cellipse cx='160' cy='575' rx='6' ry='3'/%3E%3Cellipse cx='180' cy='585' rx='6' ry='3' transform='rotate(30 180 585)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  background-size: 100% 100%;
+  background-position: center;
+}
+
+/* ── Edge vignette (dark border glow) ── */
+.board .vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow:
+    inset 0   0  80px rgba(0,0,0,0.6),
+    inset 0   0  30px rgba(0,0,0,0.4);
+}
+
+/* ═══════════════════════════════════════════
+   INNER GRID — height: 100%
+═══════════════════════════════════════════ */
+.inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  gap: var(--gap-col);
+  direction: ltr;
+
+  /* Fill available height after board padding */
+  height: calc(100% - 0px);
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+/* ═══════════════════════════════════════════
+   COLUMNS — distribute sections vertically
+═══════════════════════════════════════════ */
+.colLeft,
+.colCenter,
+.colRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* spread sections to fill height */
+  gap: var(--gap-sec);
+  min-width: 0;
+  height: 100%;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION BLOCKS
+═══════════════════════════════════════════ */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  direction: rtl;
+  flex: 1; /* all sections grow equally within the column */
+}
+
+/* ── Gold gradient header bar ── */
+.sectionTitle {
+  margin: 0 0 2px;
+  padding: var(--head-py) var(--head-px);
+  font-size: var(--fs-title);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--head-fg);
+  border-radius: 3px;
+  letter-spacing: 0.03em;
+  flex-shrink: 0;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.22) 0%, transparent 45%),
+    linear-gradient(
+      90deg,
+      var(--g1) 0%,
+      var(--g2) 12%,
+      var(--g3) 32%,
+      var(--g4) 50%,
+      var(--g5) 68%,
+      var(--g6) 88%,
+      var(--g7) 100%
+    );
+
+  box-shadow:
+    0 1px 0 rgba(0,0,0,0.35),
+    0 3px 10px rgba(0,0,0,0.45),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+}
+
+.sectionTitleEn {
+  font-family: var(--font-en), "DM Sans", system-ui, sans-serif;
+  font-style: italic;
+  letter-spacing: 0.06em;
+}
+
+/* ═══════════════════════════════════════════
+   ITEM ROWS
+═══════════════════════════════════════════ */
+.itemList {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-evenly; /* rows spread inside the section */
+}
+
+.itemRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  padding: var(--row-py) 4px;
+  border-bottom: 1px solid var(--sep);
+  font-size: var(--fs-item);
+  line-height: 1.4;
+  direction: rtl;
+}
+
+.itemRow:last-child { border-bottom: none; }
+
+.name {
+  flex: 1;
+  text-align: right;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.nameEn {
+  text-align: left;
+  direction: ltr;
+  font-family: var(--font-en), system-ui, sans-serif;
+}
+
+.price {
+  flex-shrink: 0;
+  font-size: var(--fs-price);
+  font-weight: 600;
+  color: #fff;
+  min-width: 48px;
+  text-align: left;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* LTR overrides for English sections */
+.ltr          { direction: ltr; }
+.ltr .name    { text-align: left; }
+.ltr .price   { text-align: right; }
+
+/* ═══════════════════════════════════════════
+   DOUBLE-COLUMN SECTIONS (center column)
+═══════════════════════════════════════════ */
+.doubleGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 8px;
+  direction: rtl;
+  flex: 1;
+}
+
+.doubleCol {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.doubleCol .itemRow:not(:last-child) { border-bottom: 1px solid var(--sep); }
+.doubleCol .itemRow:last-child        { border-bottom: none; }
+
+.doubleCol:first-child {
+  border-inline-end: 1px solid rgba(255,255,255,0.07);
+  padding-inline-end: 6px;
+}
+.doubleCol:last-child {
+  padding-inline-start: 4px;
+}
+
+/* ═══════════════════════════════════════════
+   LOGO (real brand image)
+═══════════════════════════════════════════ */
+.logoBlock {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+/* Fixed-height container so next/image fill works */
+.logoImgWrap {
+  position: relative;
+  width: 100%;
+  height: var(--logo-h);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+
+/* ─── Large TV / 4K ─── */
+@media (min-width: 1600px) {
+  .board {
+    --fs-title: 19px;
+    --fs-item:  17px;
+    --fs-price: 17px;
+    --gap-col:  22px;
+    --gap-sec:  16px;
+    --pad-x:    26px;
+    --pad-y:    18px;
+    --head-py:  8px;
+    --head-px:  18px;
+    --row-py:   4px;
+    --logo-h:   170px;
+  }
+  .price { min-width: 62px; }
+}
+
+@media (min-width: 1920px) {
+  .board {
+    --fs-title: 22px;
+    --fs-item:  19px;
+    --fs-price: 19px;
+    --gap-col:  28px;
+    --gap-sec:  20px;
+    --pad-x:    34px;
+    --pad-y:    24px;
+    --head-py:  10px;
+    --logo-h:   200px;
+  }
+  .price { min-width: 74px; }
+}
+
+/* ─── Compact desktop ─── */
+@media (max-width: 1280px) {
+  .board {
+    --fs-title: 13px;
+    --fs-item:  12px;
+    --fs-price: 12px;
+    --gap-col:  10px;
+    --gap-sec:  8px;
+    --pad-x:    10px;
+    --head-py:  4px;
+    --head-px:  9px;
+    --row-py:   2px;
+    --logo-h:   110px;
+  }
+  .price { min-width: 42px; }
+}
+
+/* ─── Tablet landscape: 2 columns, right spans bottom ─── */
+@media (max-width: 1024px) {
+  .board {
+    height: auto;
+    min-height: 100dvh;
+    overflow: auto;
+  }
+
+  .inner {
+    height: auto;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "left  center"
+      "right right";
+  }
+
+  .colLeft   { grid-area: left;   height: auto; justify-content: flex-start; }
+  .colCenter { grid-area: center; height: auto; justify-content: flex-start; }
+  .colRight  {
+    grid-area: right;
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .logoBlock  { width: 100%; justify-content: center; }
+  .colRight .section { flex: 1 1 200px; }
+  .section { flex: none; }
+  .itemList { justify-content: flex-start; }
+  .doubleCol { justify-content: flex-start; }
+}
+
+/* ─── Tablet portrait ─── */
+@media (max-width: 768px) {
+  .inner {
+    grid-template-columns: 1fr;
+    grid-template-areas: none;
+  }
+
+  .colLeft,
+  .colCenter,
+  .colRight {
+    grid-area: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: auto;
+  }
+
+  .board {
+    --fs-title: 14px;
+    --fs-item:  13px;
+    --fs-price: 13px;
+    --logo-h:   140px;
+  }
+
+  .doubleGrid { grid-template-columns: 1fr 1fr; }
+  .doubleCol:first-child {
+    border-inline-end: 1px solid rgba(255,255,255,0.07);
+    padding-inline-end: 6px;
+  }
+  .doubleCol:last-child {
+    padding-inline-start: 4px;
+  }
+}
+
+/* ─── Small mobile ─── */
+@media (max-width: 480px) {
+  .board {
+    --fs-title: 13px;
+    --fs-item:  12px;
+    --fs-price: 12px;
+    --pad-x:    8px;
+    --logo-h:   110px;
+  }
+
+  .doubleGrid { grid-template-columns: 1fr; }
+  .doubleCol:first-child {
+    border-inline-end: none;
+    padding-inline-end: 0;
+  }
+  .doubleCol:last-child {
+    border-top: 1px solid var(--sep);
+    padding-top: 4px;
+    padding-inline-start: 0;
+  }
+}
+
+/* Print */
+@media print {
+  .board {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    height: auto;
+  }
+}
