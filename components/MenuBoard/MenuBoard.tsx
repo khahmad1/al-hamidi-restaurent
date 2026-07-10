@@ -92,6 +92,12 @@ const LAYOUT_CONFIG: {
       layout: "single" as const,
       titleLang: "ar" as const,
     },
+    {
+      categoryKeys: ["Pizza"],
+      sectionTitle: "Pizza",
+      layout: "single" as const,
+      titleLang: "en" as const,
+    },
   ],
 
   center: [
@@ -103,7 +109,7 @@ const LAYOUT_CONFIG: {
     },
     {
       // Merge both سواريه categories into one section
-      categoryKeys: ["سواريه بعجينة رقاقات", "سواريه بعجينة مناقيش"],
+      categoryKeys: ["سواريه", "سواريه بعجينة مناقيش"],
       sectionTitle: "سواريه",
       layout: "double" as const,
       titleLang: "ar" as const,
